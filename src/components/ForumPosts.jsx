@@ -1,15 +1,26 @@
+import { useState } from "react";
 
-const ForumPosts = ({ posts, username }) => {
-    // Connect to pocketbase
+const ForumPosts = ({ posts, username, deletePost }) => {
+    const [body, setBody] = useState('');
+    const [clickedId, setClickedId] = useState();
 
-    // Delete button deletes item from pockebase
+
+    // deletePost(body, username)
+    function handleDeleteClicked(index) {
+        // deletePost(body, username)
+        setClickedId(index);
+        console.log(index)
+        console.log(posts[clickedId - 1].body)
+        // console.log(posts[clickedId].body, posts[clickedId].author);
+    }
+
     return (
       <div className='mt-10'>
-        {posts.map(post => (
+        {posts.map((post, index) => (
           <div key={post.id} className="bg-white rounded shadow p-6 mb-4 mx-16">
             <div className="flex justify-between mb-4">
               <h2 className="text-xl font-bold mb-2">{post.title}</h2>
-              <button hidden={username!==post.author} className="px-4 py-2 text-xs font-semibold text-white bg-red-500 rounded-full hover:bg-red-600 focus:outline-none focus:shadow-outline">
+              <button hidden={username!==post.author} onClick={handleDeleteClicked} className="px-4 py-2 text-xs font-semibold text-white bg-red-500 rounded-full hover:bg-red-600 focus:outline-none focus:shadow-outline">
                 Delete
               </button>
             </div>
